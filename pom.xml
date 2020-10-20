@@ -4,8 +4,9 @@
 	<modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
-        <module>help-me.web</module>
-        <module>help-me.core</module>
+        <module>help-yourself.web</module>
+        <module>help-yourself.core</module>
+        <module>help-yourself.common</module>
     </modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
@@ -14,9 +15,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.help.yourself</groupId>
-	<artifactId>help.me</artifactId>
+	<artifactId>help.yourself</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>help.me</name>
+	<name>help.yourself</name>
 	<description>Help yourself startup</description>
 
 	<properties>

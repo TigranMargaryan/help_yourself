@@ -1,12 +1,16 @@
 package com.help.yourself.web.Controller;
 
+import com.help.yourself.common.resource.VolunteerResource;
 import com.help.yourself.core.data.Volunteer;
 import com.help.yourself.core.manager.IManager.IVolunteerManager;
 import com.help.yourself.core.repository.VolunteerRepository;
+import com.help.yourself.web.config.Response;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 
 @RestController
 public class TestController {
@@ -16,18 +20,24 @@ public class TestController {
     @Autowired
     VolunteerRepository volunteerRepository;
 
-    @GetMapping(value = "/test", produces = MediaType.TEXT_PLAIN_VALUE)
-    public String test(){
-        Volunteer volunteer = new Volunteer();
-        volunteer.setFirstName("tiko");
-        volunteer.setLastName("marga");
-        volunteer.setUserName("tlam");
-        volunteer.setMail("gmail");
-        volunteer.setPassword("password");
-        volunteer.setId("1");
-        volunteerRepository.save(volunteer);
+    @Autowired
+    ModelMapper modelMapper;
 
-        //volunteerManager.create(volunteer);
-        return "this is a test call";
+    @Autowired
+    public TestController(IVolunteerManager volunteerManager){
+        this.volunteerManager = volunteerManager;
+    }
+
+    @PostMapping(value = "/test", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Response test(@RequestBody VolunteerResource volunteerResource){
+        Volunteer volunteer = modelMapper.map(volunteerResource, Volunteer.class);
+
+        volunteerManager.create(volunteer);
+
+        VolunteerResource resource = modelMapper.map(volunteer, VolunteerResource.class);
+
+        return new Response<>(new HashMap<String, VolunteerResource>() {{
+            put("volunteer", resource);
+        }});
     }
 }

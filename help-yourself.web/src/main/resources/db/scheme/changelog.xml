@@ -30,7 +30,7 @@
             <column name="username" type="VARCHAR2(32)">
                 <constraints primaryKey="false"/>
             </column>
-            <column name="mail" type="VARCHAR2(32)">
+            <column name="email" type="VARCHAR2(32)">
                 <constraints primaryKey="false"/>
             </column>
             <column name="password" type="VARCHAR2(60)">

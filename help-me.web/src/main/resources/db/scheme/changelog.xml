@@ -1,0 +1,43 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <property name="NOW" value="UNIX_TIMESTAMP(NOW())" dbms="mysql"/>
+    <property name="GUID" value="REPLACE(UUID(), '-', '')" dbms="mysql"/>
+
+    <changeSet id="1" author="Tigran Margaryan" runOnChange="true">
+        <comment>Help yourself db</comment>
+
+        <sql>
+            SET foreign_key_checks = 0;
+            DROP TABLE IF EXISTS `volunteer`;
+            SET foreign_key_checks = 1;
+        </sql>
+
+        <!--Volunteer table -->
+        <createTable tableName="volunteer">
+            <column name="id" type="VARCHAR2(50)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="first_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR2(32)">
+                <constraints primaryKey="false"/>
+            </column>
+            <column name="mail" type="VARCHAR2(32)">
+                <constraints primaryKey="false"/>
+            </column>
+            <column name="password" type="VARCHAR2(60)">
+                <constraints primaryKey="false"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+
+</databaseChangeLog>

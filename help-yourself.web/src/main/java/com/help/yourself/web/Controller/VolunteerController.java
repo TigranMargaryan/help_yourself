@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 
 @RestController
-public class TestController {
+public class VolunteerController {
 
     IVolunteerManager volunteerManager;
 
@@ -24,11 +24,11 @@ public class TestController {
     ModelMapper modelMapper;
 
     @Autowired
-    public TestController(IVolunteerManager volunteerManager){
+    public VolunteerController(IVolunteerManager volunteerManager){
         this.volunteerManager = volunteerManager;
     }
 
-    @PostMapping(value = "/test", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/volunteer", produces = MediaType.APPLICATION_JSON_VALUE)
     public Response test(@RequestBody VolunteerResource volunteerResource){
         Volunteer volunteer = modelMapper.map(volunteerResource, Volunteer.class);
 

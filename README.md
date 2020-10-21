@@ -35,7 +35,8 @@ This my own project, to help people find  answers for their problems
 
 ```
 ├── help-yourself
-|   ├── help-yourself.core-------# resources,services and data layers
+|   ├── help-yourself.common-----# resources,validators, config layer
+|   ├── help-yourself.core-------# services and data layer
 |   ├── help-yourself.web--------# web related data and security
 |   ├── pom.xml------------------# all maven dependencies
 └── └── README.md ---------------# project info

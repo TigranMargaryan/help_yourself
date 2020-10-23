@@ -1,7 +1,8 @@
 package com.help.yourself.common.resource;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.sun.istack.NotNull;
+
+import javax.validation.constraints.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class VolunteerResource {

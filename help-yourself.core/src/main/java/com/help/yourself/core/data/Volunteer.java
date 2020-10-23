@@ -1,5 +1,7 @@
 package com.help.yourself.core.data;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import javax.persistence.*;
 import java.util.UUID;
 
@@ -30,7 +32,7 @@ public class Volunteer {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId() {
         this.id = UUID.randomUUID().toString();
     }
 
@@ -71,6 +73,6 @@ public class Volunteer {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = new BCryptPasswordEncoder().encode(password);
     }
 }

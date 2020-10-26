@@ -10,6 +10,7 @@ import com.help.yourself.web.config.Response;
 import javassist.bytecode.DuplicateMemberException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -36,9 +37,9 @@ public class VolunteerController {
     public Response getVolunteer(@AuthenticationPrincipal VolunteerContext volunteerContext){
         Volunteer volunteer = volunteerManager.getByEmail(volunteerContext.getVolunteerEmail());
 
-        VolunteerResource resource = modelMapper.map(volunteer, VolunteerResource.class);
+        VolunteerProfileResource resource = modelMapper.map(volunteer, VolunteerProfileResource.class);
 
-        return new Response<>(new HashMap<String, VolunteerResource>(){{
+        return new Response<>(new HashMap<String, VolunteerProfileResource>(){{
             put("volunteer", resource);
         }
         });
@@ -70,5 +71,15 @@ public class VolunteerController {
         return new Response(new HashMap<String, VolunteerProfileResource>(){{
             put("volunteer", resource);
         }});
+    }
+
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @DeleteMapping(value = "/help-yourself/volunteers")
+    public Response deleteVolunteer(@AuthenticationPrincipal VolunteerContext volunteerContext){
+        Volunteer volunteer = volunteerManager.getByEmail(volunteerContext.getVolunteerEmail());
+
+        volunteerManager.delete(volunteer);
+
+        return new Response("Accepted");
     }
 }

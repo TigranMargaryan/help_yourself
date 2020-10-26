@@ -9,4 +9,6 @@ public interface IVolunteerManager {
     void create(Volunteer volunteer) throws DuplicateMemberException;
 
     void update(Volunteer volunteer);
+
+    void delete(Volunteer volunteer);
 }

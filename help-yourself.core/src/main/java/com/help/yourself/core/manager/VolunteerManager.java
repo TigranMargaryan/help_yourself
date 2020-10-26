@@ -38,7 +38,12 @@ public class VolunteerManager implements IVolunteerManager {
 
     @Override
     public void update(Volunteer volunteer) {
-      volunteerRepository.save(volunteer);
+        volunteerRepository.save(volunteer);
+    }
+
+    @Override
+    public void delete(Volunteer volunteer) {
+        volunteerRepository.delete(volunteer);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.help.yourself.web.Controller;
 
+import com.help.yourself.common.resource.VolunteerProfileResource;
 import com.help.yourself.common.resource.VolunteerResource;
 import com.help.yourself.core.context.VolunteerContext;
 import com.help.yourself.core.data.Volunteer;
@@ -57,16 +58,16 @@ public class VolunteerController {
     }
 
     @PutMapping(value = "/help-yourself/volunteers", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response updateVolunteer(@RequestBody VolunteerResource volunteerResource, @AuthenticationPrincipal VolunteerContext volunteerContext){
-        volunteerManager.getByEmail(volunteerContext.getVolunteerEmail());
+    public Response updateVolunteer(@RequestBody VolunteerProfileResource volunteerResource, @AuthenticationPrincipal VolunteerContext volunteerContext){
+        Volunteer volunteer = volunteerManager.getByEmail(volunteerContext.getVolunteerEmail());
 
-        Volunteer volunteer = modelMapper.map(volunteerResource, Volunteer.class);
-        volunteer.setId(volunteerContext.getVolunteerId());
+        modelMapper.map(volunteerResource, volunteer);
+
         volunteerManager.update(volunteer);
 
-        VolunteerResource resource = modelMapper.map(volunteer, VolunteerResource.class);
+        VolunteerProfileResource resource = modelMapper.map(volunteer, VolunteerProfileResource.class);
 
-        return new Response(new HashMap<String, VolunteerResource>(){{
+        return new Response(new HashMap<String, VolunteerProfileResource>(){{
             put("volunteer", resource);
         }});
     }

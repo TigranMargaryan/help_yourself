@@ -1,0 +1,169 @@
+{
+	"info": {
+		"_postman_id": "8b392674-e306-4287-88fb-308d01cde92b",
+		"name": "Help-yourself",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "volunteer#create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"Tiko\",\n    \"lastName\": \"Margaryan\",\n    \"userName\": \"tlam14\",\n    \"email\": \"margaryantigran4@gmail.com\",\n    \"password\": \"tlam14\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/volunteer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"volunteer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login#volunteer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fe6f8c84-ac9f-4c3f-9231-b8242558f66e",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "devglan-client",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "devglan-secret",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "margaryantigran4@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "tlam14",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "devglan-client",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "client_secret",
+							"value": "$2a$04$e/c1/RfsWuThaWFCrcCuJeoyvwCV0URN/6Pn9ZFlrtIWaU/vj/BfG",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "volunteer#get",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "29a638df-6b42-4d06-92b3-405eee9ad56c",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/help-yourself/volunteer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"help-yourself",
+						"volunteer"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

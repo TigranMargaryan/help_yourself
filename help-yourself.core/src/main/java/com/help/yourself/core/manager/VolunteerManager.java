@@ -5,17 +5,10 @@ import com.help.yourself.core.manager.IManager.IVolunteerManager;
 import com.help.yourself.core.repository.VolunteerRepository;
 import javassist.bytecode.DuplicateMemberException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
-
-@Service(value = "userService")
-public class VolunteerManager implements IVolunteerManager, UserDetailsService {
+@Service
+public class VolunteerManager implements IVolunteerManager {
 
     @Autowired
     private VolunteerRepository volunteerRepository;
@@ -43,17 +36,4 @@ public class VolunteerManager implements IVolunteerManager, UserDetailsService {
         }
         return volunteer;
     }
-
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Volunteer user = volunteerRepository.findByEmail(email);
-        if(user == null){
-            throw new UsernameNotFoundException("Invalid username or password.");
-        }
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), getAuthority());
-    }
-
-    private List getAuthority() {
-        return Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
-    }
-
 }

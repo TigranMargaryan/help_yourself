@@ -1,6 +1,7 @@
 package com.help.yourself.web.Controller;
 
 import com.help.yourself.common.resource.VolunteerResource;
+import com.help.yourself.core.context.VolunteerContext;
 import com.help.yourself.core.data.Volunteer;
 import com.help.yourself.core.manager.IManager.IVolunteerManager;
 import com.help.yourself.core.repository.VolunteerRepository;
@@ -9,6 +10,7 @@ import javassist.bytecode.DuplicateMemberException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -30,8 +32,8 @@ public class VolunteerController {
     }
 
     @GetMapping(value = "/help-yourself/volunteer", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response getVolunteer(@RequestBody VolunteerResource volunteerResource){
-        Volunteer volunteer = volunteerManager.getByEmail(volunteerResource.getEmail());
+    public Response getVolunteer(@AuthenticationPrincipal VolunteerContext volunteerContext){
+        Volunteer volunteer = volunteerManager.getByEmail(volunteerContext.getVolunteerEmail());
 
         VolunteerResource resource = modelMapper.map(volunteer, VolunteerResource.class);
 

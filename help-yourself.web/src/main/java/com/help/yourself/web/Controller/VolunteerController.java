@@ -5,6 +5,7 @@ import com.help.yourself.core.data.Volunteer;
 import com.help.yourself.core.manager.IManager.IVolunteerManager;
 import com.help.yourself.core.repository.VolunteerRepository;
 import com.help.yourself.web.config.Response;
+import javassist.bytecode.DuplicateMemberException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -28,8 +29,20 @@ public class VolunteerController {
         this.volunteerManager = volunteerManager;
     }
 
+    @GetMapping(value = "/help-yourself/volunteer", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Response getVolunteer(@RequestBody VolunteerResource volunteerResource){
+        Volunteer volunteer = volunteerManager.getByEmail(volunteerResource.getEmail());
+
+        VolunteerResource resource = modelMapper.map(volunteer, VolunteerResource.class);
+
+        return new Response<>(new HashMap<String, VolunteerResource>(){{
+            put("volunteer", resource);
+        }
+        });
+    }
+
     @PostMapping(value = "/volunteer", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response test(@RequestBody VolunteerResource volunteerResource){
+    public Response createVolunteer(@RequestBody VolunteerResource volunteerResource) throws DuplicateMemberException {
         Volunteer volunteer = modelMapper.map(volunteerResource, Volunteer.class);
 
         volunteerManager.create(volunteer);

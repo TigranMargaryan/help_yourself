@@ -4,6 +4,9 @@ import com.help.yourself.core.data.Volunteer;
 import javassist.bytecode.DuplicateMemberException;
 
 public interface IVolunteerManager {
-    void create(Volunteer volunteer) throws DuplicateMemberException;
     Volunteer getByEmail(String email);
+
+    void create(Volunteer volunteer) throws DuplicateMemberException;
+
+    void update(Volunteer volunteer);
 }

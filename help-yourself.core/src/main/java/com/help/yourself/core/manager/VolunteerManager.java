@@ -14,6 +14,15 @@ public class VolunteerManager implements IVolunteerManager {
     private VolunteerRepository volunteerRepository;
 
 
+    @Override
+    public Volunteer getByEmail(String email) {
+        Volunteer volunteer = volunteerRepository.findByEmail(email);
+
+        if(volunteer == null){
+            throw new NullPointerException("volunteer with this email don't exist");
+        }
+        return volunteer;
+    }
 
     @Override
     public void create(Volunteer volunteer) throws DuplicateMemberException {
@@ -28,12 +37,8 @@ public class VolunteerManager implements IVolunteerManager {
     }
 
     @Override
-    public Volunteer getByEmail(String email) {
-        Volunteer volunteer = volunteerRepository.findByEmail(email);
-
-        if(volunteer == null){
-            throw new NullPointerException("volunteer with this email don't exist");
-        }
-        return volunteer;
+    public void update(Volunteer volunteer) {
+      volunteerRepository.save(volunteer);
     }
+
 }

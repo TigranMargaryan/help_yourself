@@ -31,7 +31,7 @@ public class VolunteerController {
         this.volunteerManager = volunteerManager;
     }
 
-    @GetMapping(value = "/help-yourself/volunteer", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/help-yourself/volunteers", produces = MediaType.APPLICATION_JSON_VALUE)
     public Response getVolunteer(@AuthenticationPrincipal VolunteerContext volunteerContext){
         Volunteer volunteer = volunteerManager.getByEmail(volunteerContext.getVolunteerEmail());
 
@@ -43,7 +43,7 @@ public class VolunteerController {
         });
     }
 
-    @PostMapping(value = "/volunteer", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/volunteers", produces = MediaType.APPLICATION_JSON_VALUE)
     public Response createVolunteer(@RequestBody VolunteerResource volunteerResource) throws DuplicateMemberException {
         Volunteer volunteer = modelMapper.map(volunteerResource, Volunteer.class);
 
@@ -52,6 +52,21 @@ public class VolunteerController {
         VolunteerResource resource = modelMapper.map(volunteer, VolunteerResource.class);
 
         return new Response<>(new HashMap<String, VolunteerResource>() {{
+            put("volunteer", resource);
+        }});
+    }
+
+    @PutMapping(value = "/help-yourself/volunteers", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Response updateVolunteer(@RequestBody VolunteerResource volunteerResource, @AuthenticationPrincipal VolunteerContext volunteerContext){
+        volunteerManager.getByEmail(volunteerContext.getVolunteerEmail());
+
+        Volunteer volunteer = modelMapper.map(volunteerResource, Volunteer.class);
+        volunteer.setId(volunteerContext.getVolunteerId());
+        volunteerManager.update(volunteer);
+
+        VolunteerResource resource = modelMapper.map(volunteer, VolunteerResource.class);
+
+        return new Response(new HashMap<String, VolunteerResource>(){{
             put("volunteer", resource);
         }});
     }

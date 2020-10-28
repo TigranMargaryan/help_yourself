@@ -6,115 +6,270 @@
 	},
 	"item": [
 		{
-			"name": "volunteer#create",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"firstName\": \"Tiko\",\n    \"lastName\": \"Margaryan\",\n    \"userName\": \"tlam14\",\n    \"email\": \"margaryantigran4@gmail.com\",\n    \"password\": \"tlam14\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/volunteer",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"volunteer"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "login#volunteer",
-			"event": [
+			"name": "User",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"id": "fe6f8c84-ac9f-4c3f-9231-b8242558f66e",
-						"exec": [
-							"var jsonData = JSON.parse(responseBody);",
-							"",
-							"postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);"
+					"name": "login#user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fe6f8c84-ac9f-4c3f-9231-b8242558f66e",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "devglan-client",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "devglan-secret",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "margaryantigran4@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "tlam14",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "devglan-client",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "client_secret",
+									"value": "$2a$04$e/c1/RfsWuThaWFCrcCuJeoyvwCV0URN/6Pn9ZFlrtIWaU/vj/BfG",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user#create",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "devglan-client",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "devglan-secret",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Tiko\",\n    \"lastName\": \"Margaryan\",\n    \"userName\": \"tlam14\",\n    \"type\": 2,\n    \"email\": \"margaryantigran4@gmail.com\",\n    \"password\": \"tlam14\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user#get",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "29a638df-6b42-4d06-92b3-405eee9ad56c",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
 						],
-						"type": "text/javascript"
-					}
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/help-yourself/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"help-yourself",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user#update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\":\"123123\",\n    \"firstName\": \"Azat\",\n    \"lastName\": \"Babayan\",\n    \"userName\": \"tlam1411\",\n    \"email\": \"margaryantigran4@gmail.com111\",\n    \"password\": \"tlam14111\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/help-yourself/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"help-yourself",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user#delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "29a638df-6b42-4d06-92b3-405eee9ad56c",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"tests[\"Status code is 202\"] = responseCode.code === 202;",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/help-yourself/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"help-yourself",
+								"users"
+							]
+						}
+					},
+					"response": []
 				}
 			],
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "username",
-							"value": "devglan-client",
-							"type": "string"
-						},
-						{
-							"key": "password",
-							"value": "devglan-secret",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "username",
-							"value": "margaryantigran4@gmail.com",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "tlam14",
-							"type": "text"
-						},
-						{
-							"key": "grant_type",
-							"value": "password",
-							"type": "text"
-						},
-						{
-							"key": "client_id",
-							"value": "devglan-client",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "client_secret",
-							"value": "$2a$04$e/c1/RfsWuThaWFCrcCuJeoyvwCV0URN/6Pn9ZFlrtIWaU/vj/BfG",
-							"type": "text",
-							"disabled": true
-						}
-					]
-				},
-				"url": {
-					"raw": "http://localhost:8080/login",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"login"
-					]
-				}
-			},
-			"response": []
+			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "volunteer#get",
+			"name": "user#Type",
 			"event": [
 				{
 					"listen": "test",
@@ -150,7 +305,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/help-yourself/volunteer",
+					"raw": "http://localhost:8080/help-yourself/users/types",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -158,7 +313,8 @@
 					"port": "8080",
 					"path": [
 						"help-yourself",
-						"volunteer"
+						"users",
+						"types"
 					]
 				}
 			},

@@ -12,12 +12,31 @@
 
         <sql>
             SET foreign_key_checks = 0;
-            DROP TABLE IF EXISTS `volunteer`;
+            DROP TABLE IF EXISTS `type_user`;
+            DROP TABLE IF EXISTS `user`;
             SET foreign_key_checks = 1;
         </sql>
 
-        <!--Volunteer table -->
-        <createTable tableName="volunteer">
+        <!--User type table definition-->
+        <createTable tableName="type_user">
+            <column name="id" autoIncrement="false" type="INT(1)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <insert tableName="type_user">
+            <column name="id" value="1"/>
+            <column name="type" value="NEEDY"/>
+        </insert>
+        <insert tableName="type_user">
+            <column name="id" value="2"/>
+            <column name="type" value="VOLUNTEER"/>
+        </insert>
+
+        <!--User table -->
+        <createTable tableName="user">
             <column name="id" type="VARCHAR2(50)">
                 <constraints primaryKey="true"/>
             </column>
@@ -28,15 +47,30 @@
                 <constraints nullable="false"/>
             </column>
             <column name="username" type="VARCHAR2(32)">
-                <constraints primaryKey="false"/>
+                <constraints nullable="false"/>
             </column>
             <column name="email" type="VARCHAR2(32)">
-                <constraints primaryKey="false"/>
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="INT(1)" defaultValue="1">
+                <constraints nullable="false"/>
             </column>
             <column name="password" type="VARCHAR2(60)">
-                <constraints primaryKey="false"/>
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated" type="BIGINT">
+                <constraints nullable="false"/>
             </column>
         </createTable>
+        <addForeignKeyConstraint baseTableName="user"
+                                 baseColumnNames="type"
+                                 constraintName="USER_TYPE_FK"
+                                 referencedTableName="type_user"
+                                 referencedColumnNames="id"
+                                 onUpdate="CASCADE"/>
 
     </changeSet>
 

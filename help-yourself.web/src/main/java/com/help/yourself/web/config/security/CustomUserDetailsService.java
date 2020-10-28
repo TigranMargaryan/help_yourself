@@ -1,7 +1,7 @@
 package com.help.yourself.web.config.security;
 
-import com.help.yourself.core.data.Volunteer;
-import com.help.yourself.core.repository.VolunteerRepository;
+import com.help.yourself.core.data.User;
+import com.help.yourself.core.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,13 +12,13 @@ import org.springframework.stereotype.Service;
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    VolunteerRepository volunteerRepository;
+    UserRepository userRepository;
 
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Volunteer volunteer = volunteerRepository.findByEmail(email);
-        if(volunteer == null){
+        User user = userRepository.findByEmail(email);
+        if(user == null){
             throw new UsernameNotFoundException("Invalid username or password.");
         }
-        return new SecurityDetails(volunteer);
+        return new SecurityDetails(user);
     }
 }

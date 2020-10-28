@@ -6,12 +6,8 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "volunteer")
-public class Volunteer {
-
-    @Id
-    @Column(name = "id", nullable = false)
-    private String id;
+@Table(name = "user")
+public class User extends BaseEntity{
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -22,21 +18,14 @@ public class Volunteer {
     @Column(name = "username", nullable = false)
     private String userName;
 
+    @Column(name = "type", nullable = false)
+    private Integer type;
+
     @Column(name = "email", nullable = false, length = 200)
     private String email;
 
     @Column(name = "password", nullable = false)
     private String password;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId() {
-        this.id = UUID.randomUUID().toString();
-    }
-
-    public void setId(String id){this.id = id;}
 
     public String getFirstName() {
         return firstName;
@@ -60,6 +49,14 @@ public class Volunteer {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public String getEmail() {

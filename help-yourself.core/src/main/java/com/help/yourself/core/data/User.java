@@ -3,6 +3,8 @@ package com.help.yourself.core.data;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -26,6 +28,9 @@ public class User extends BaseEntity{
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<UserSkill> userSkills = new ArrayList<>(0);
 
     public String getFirstName() {
         return firstName;
@@ -73,5 +78,13 @@ public class User extends BaseEntity{
 
     public void setPassword(String password) {
         this.password = new BCryptPasswordEncoder().encode(password);
+    }
+
+    public List<UserSkill> getUserSkills() {
+        return userSkills;
+    }
+
+    public void setUserSkills(List<UserSkill> userSkills) {
+        this.userSkills = userSkills;
     }
 }

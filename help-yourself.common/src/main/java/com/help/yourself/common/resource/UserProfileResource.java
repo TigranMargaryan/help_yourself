@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class UserProfileResource {
@@ -19,6 +20,9 @@ public class UserProfileResource {
 
     @NotNull
     private String userName;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private List<UserSkillResource> userSkills;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String email;
@@ -72,5 +76,13 @@ public class UserProfileResource {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public List<UserSkillResource> getUserSkills() {
+        return userSkills;
+    }
+
+    public void setUserSkills(List<UserSkillResource> userSkills) {
+        this.userSkills = userSkills;
     }
 }

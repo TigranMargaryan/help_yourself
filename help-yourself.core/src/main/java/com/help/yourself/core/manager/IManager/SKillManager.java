@@ -15,7 +15,14 @@ public class SKillManager implements ISkillManager {
 
     @Override
     public Skill getById(String id) {
-        return null;
+
+        Skill skill = skillRepository.findFirstById(id);
+
+        if (skill == null){
+            throw new NullPointerException("skill don't exist");
+        }
+
+        return skill;
     }
 
     @Override
@@ -38,7 +45,8 @@ public class SKillManager implements ISkillManager {
     }
 
     @Override
-    public void delete(Skill skill) {
+    public void delete(String id) {
 
+        skillRepository.delete(getById(id));
     }
 }

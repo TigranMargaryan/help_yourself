@@ -8,11 +8,10 @@ import com.help.yourself.web.config.Response;
 import javassist.bytecode.DuplicateMemberException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
@@ -36,5 +35,15 @@ public class SkillController {
         return new Response<>(new HashMap<String, SkillResource>() {{
             put("skill", createdSkillResource);
         }});
+    }
+
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @DeleteMapping(value = "/help-yourself/skills/{skillId}")
+    public Response deleteSkill(@PathVariable String skillId){
+        skillManager.getById(skillId);
+
+        skillManager.delete(skillId);
+
+        return new Response("Accepted");
     }
 }

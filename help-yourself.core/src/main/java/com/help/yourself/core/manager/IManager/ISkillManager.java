@@ -8,5 +8,5 @@ public interface ISkillManager {
     Skill getById(String id);
     void create(UserContext userContext, Skill skill) throws DuplicateMemberException;
     Void update(Skill skill);
-    void delete(Skill skill);
+    void delete(String skill);
 }

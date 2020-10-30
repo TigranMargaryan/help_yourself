@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SkillRepository extends JpaRepository<Skill, String>{
     Skill findByName(String name);
+    Skill findFirstById(String id);
 }

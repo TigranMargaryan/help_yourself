@@ -24,6 +24,17 @@ public class SkillController {
     @Autowired
     ISkillManager skillManager;
 
+    @GetMapping(value = "/help-yourself/skills{skillId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Response getSkill(@PathVariable String skillId){
+        Skill skill = skillManager.getById(skillId);
+
+        SkillResource skillResource = modelMapper.map(skill, SkillResource.class);
+        
+        return new Response<>(new HashMap<String, SkillResource>() {{
+            put("skill", skillResource);
+        }});
+    }
+
     @PostMapping(value = "/help-yourself/skills", produces = MediaType.APPLICATION_JSON_VALUE)
     public Response createSkill(@RequestBody SkillResource skillResource, @AuthenticationPrincipal UserContext userContext) throws DuplicateMemberException {
         Skill skill = modelMapper.map(skillResource, Skill.class);

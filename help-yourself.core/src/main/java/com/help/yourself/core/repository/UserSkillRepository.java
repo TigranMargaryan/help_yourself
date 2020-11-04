@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface UserSkillRepository extends JpaRepository<UserSkill, Long> {
     List<UserSkill> findAllByUserId(String userId);
+    UserSkill findFirstById(String id);
 }

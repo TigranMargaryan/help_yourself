@@ -15,7 +15,12 @@ public class UserSkillManger implements IUserSkillManager {
 
     @Override
     public UserSkill getById(UserContext userContext, String id) {
-        return null;
+        UserSkill userSkill = userSkillRepository.findFirstById(id);
+
+        if (userSkill == null){
+            throw new NullPointerException("user skill don't exist");
+        }
+        return userSkill;
     }
 
     @Override
@@ -29,7 +34,7 @@ public class UserSkillManger implements IUserSkillManager {
     }
 
     @Override
-    public void delete(UserContext userContext, String id) {
-
+    public void delete(UserContext userContext, UserSkill userSkill) {
+        userSkillRepository.delete(userSkill);
     }
 }

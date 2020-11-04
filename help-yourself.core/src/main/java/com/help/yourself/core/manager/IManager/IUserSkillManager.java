@@ -10,5 +10,5 @@ public interface IUserSkillManager {
 
     void Update(UserContext userContext, String id);
 
-    void delete(UserContext userContext, String id);
+    void delete(UserContext userContext, UserSkill userSkill);
 }

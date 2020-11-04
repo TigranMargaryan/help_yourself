@@ -29,7 +29,7 @@ public class SkillController {
         Skill skill = skillManager.getById(skillId);
 
         SkillResource skillResource = modelMapper.map(skill, SkillResource.class);
-        
+
         return new Response<>(new HashMap<String, SkillResource>() {{
             put("skill", skillResource);
         }});

@@ -3,6 +3,7 @@ package com.help.yourself.core.manager;
 import com.help.yourself.core.data.User;
 import com.help.yourself.core.manager.IManager.IUserManager;
 import com.help.yourself.core.repository.UserRepository;
+import com.help.yourself.core.repository.UserSkillRepository;
 import javassist.bytecode.DuplicateMemberException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,8 @@ public class UserManager implements IUserManager {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserSkillRepository userSkillRepository;
 
     @Override
     public User getById(String email) {

@@ -1,14 +1,15 @@
-package com.help.yourself.core.manager.IManager;
+package com.help.yourself.core.manager;
 
 import com.help.yourself.core.context.UserContext;
 import com.help.yourself.core.data.Skill;
+import com.help.yourself.core.manager.IManager.ISkillManager;
 import com.help.yourself.core.repository.SkillRepository;
 import javassist.bytecode.DuplicateMemberException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SKillManager implements ISkillManager {
+public class SkillManager implements ISkillManager {
 
     @Autowired
     SkillRepository skillRepository;
@@ -33,8 +34,6 @@ public class SKillManager implements ISkillManager {
         if(existSkill != null){
             throw new DuplicateMemberException("Skill with this name already exist");
         }
-
-        skill.setId();
 
         skillRepository.save(skill);
     }

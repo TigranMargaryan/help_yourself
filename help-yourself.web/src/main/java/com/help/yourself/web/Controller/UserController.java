@@ -5,6 +5,7 @@ import com.help.yourself.common.resource.UserResource;
 import com.help.yourself.core.context.UserContext;
 import com.help.yourself.core.data.User;
 import com.help.yourself.core.manager.IManager.IUserManager;
+import com.help.yourself.core.manager.IManager.IUserSkillManager;
 import com.help.yourself.core.repository.UserRepository;
 import com.help.yourself.web.config.Response;
 import javassist.bytecode.DuplicateMemberException;
@@ -13,14 +14,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
 @RestController
+@Transactional
 public class UserController {
 
     IUserManager userManager;
+
+    IUserSkillManager skillManager;
 
     @Autowired
     UserRepository userRepository;
@@ -29,8 +34,9 @@ public class UserController {
     ModelMapper modelMapper;
 
     @Autowired
-    public UserController(IUserManager userManager){
+    public UserController(IUserManager userManager, IUserSkillManager skillManager){
         this.userManager = userManager;
+        this.skillManager = skillManager;
     }
 
     @GetMapping(value = "/help-yourself/users", produces = MediaType.APPLICATION_JSON_VALUE)

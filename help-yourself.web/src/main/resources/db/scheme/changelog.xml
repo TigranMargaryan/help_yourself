@@ -16,6 +16,7 @@
             DROP TABLE IF EXISTS `user`;
             DROP TABLE IF EXISTS `skill`;
             DROP TABLE IF EXISTS `user_skill`;
+            DROP TABLE IF EXISTS `chat_room`;
             SET foreign_key_checks = 1;
         </sql>
 
@@ -124,6 +125,38 @@
                                  onDelete="CASCADE"/>
         <addUniqueConstraint tableName="user_skill" columnNames="user_id,skill_id" constraintName="UNIQUE_USER_SKILL"/>
 
+        <!--Chat room table definition-->
+        <createTable tableName="chat_room">
+            <column name="id" type="VARCHAR2(50)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="sender_id" type="VARCHAR2(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="recipient_id" type="VARCHAR2(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="chat_room"
+                                 baseColumnNames="sender_id"
+                                 constraintName="CHAT_ROOM_SENDER_FK"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onUpdate="CASCADE"
+                                 onDelete="CASCADE"/>
+        <addForeignKeyConstraint baseTableName="chat_room"
+                                 baseColumnNames="recipient_id"
+                                 constraintName="CHAT_ROOM_RECIPIENT_FK"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onUpdate="CASCADE"
+                                 onDelete="CASCADE"/>
     </changeSet>
 
 </databaseChangeLog>

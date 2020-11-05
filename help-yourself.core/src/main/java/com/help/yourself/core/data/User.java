@@ -32,6 +32,9 @@ public class User extends BaseEntity{
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<UserSkill> userSkills = new ArrayList<>(0);
 
+    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ChatRoom> chatRooms = new ArrayList<>(0);
+
     public String getFirstName() {
         return firstName;
     }
@@ -86,5 +89,13 @@ public class User extends BaseEntity{
 
     public void setUserSkills(List<UserSkill> userSkills) {
         this.userSkills = userSkills;
+    }
+
+    public List<ChatRoom> getChatRooms() {
+        return chatRooms;
+    }
+
+    public void setChatRooms(List<ChatRoom> chatRooms) {
+        this.chatRooms = chatRooms;
     }
 }

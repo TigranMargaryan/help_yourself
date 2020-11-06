@@ -13,10 +13,12 @@
         <sql>
             SET foreign_key_checks = 0;
             DROP TABLE IF EXISTS `type_user`;
+            DROP TABLE IF EXISTS `message_status`;
             DROP TABLE IF EXISTS `user`;
             DROP TABLE IF EXISTS `skill`;
             DROP TABLE IF EXISTS `user_skill`;
             DROP TABLE IF EXISTS `chat_room`;
+            DROP TABLE IF EXISTS `chat_message`;
             SET foreign_key_checks = 1;
         </sql>
 
@@ -36,6 +38,24 @@
         <insert tableName="type_user">
             <column name="id" value="2"/>
             <column name="type" value="VOLUNTEER"/>
+        </insert>
+
+        <!--Message status type table definition-->
+        <createTable tableName="message_status">
+            <column name="id" autoIncrement="false" type="INT(1)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <insert tableName="message_status">
+            <column name="id" value="1"/>
+            <column name="type" value="RECEIVED"/>
+        </insert>
+        <insert tableName="message_status">
+            <column name="id" value="2"/>
+            <column name="type" value="DELIVERED"/>
         </insert>
 
         <!--User table -->
@@ -157,6 +177,62 @@
                                  referencedColumnNames="id"
                                  onUpdate="CASCADE"
                                  onDelete="CASCADE"/>
+
+        <!--Chat Message table definition-->
+        <createTable tableName="chat_message">
+            <column name="id" type="VARCHAR2(50)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="sender_id" type="VARCHAR2(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="recipient_id" type="VARCHAR2(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="chat_room_id" type="VARCHAR2(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="message_status" type="INT(1)" defaultValue="1">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sender_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="recipient_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="chat_message"
+                                 baseColumnNames="sender_id"
+                                 constraintName="CHAT_MESSAGE_SENDER_FK"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onUpdate="CASCADE"
+                                 onDelete="CASCADE"/>
+        <addForeignKeyConstraint baseTableName="chat_message"
+                                 baseColumnNames="recipient_id"
+                                 constraintName="CHAT_MESSAGE_RECIPIENT_FK"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onUpdate="CASCADE"
+                                 onDelete="CASCADE"/>
+        <addForeignKeyConstraint baseTableName="chat_message"
+                                 baseColumnNames="chat_room_id"
+                                 constraintName="CHAT_MESSAGE_ROOM_FK"
+                                 referencedTableName="chat_room"
+                                 referencedColumnNames="id"
+                                 onUpdate="CASCADE"
+                                 onDelete="CASCADE"/>
+
     </changeSet>
 
 </databaseChangeLog>

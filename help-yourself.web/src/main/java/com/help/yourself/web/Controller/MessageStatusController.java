@@ -1,5 +1,6 @@
 package com.help.yourself.web.Controller;
 
+import com.help.yourself.common.resource.MessageStatus;
 import com.help.yourself.common.resource.UserType;
 import com.help.yourself.web.config.Response;
 import org.json.simple.JSONObject;
@@ -15,20 +16,21 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/help-yourself/users/types")
-public class UserTypeController {
+@RequestMapping(value = "/help-yourself/messages/statuses")
+
+public class MessageStatusController {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET)
-    public Response<Map<String, List<JSONObject>>> getUserTypes() {
-        List<JSONObject> types = new ArrayList<>();
+    public Response<Map<String, List<JSONObject>>> getMessageStatus() {
+        List<JSONObject> status = new ArrayList<>();
 
-        for(UserType type : UserType.values()) {
-            types.add(type.toJSON());
+        for(MessageStatus type : MessageStatus.values()) {
+            status.add(type.toJSON());
         }
 
         return new Response<>(new HashMap<String, List<JSONObject>>() {{
-            put("type", types);
+            put("status", status);
         }});
     }
 }

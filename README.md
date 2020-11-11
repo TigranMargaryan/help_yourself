@@ -42,3 +42,5 @@ This my own project, to help people find  answers for their problems
 └── └── README.md ---------------# project info
 ```
 -------
+#### Run application
+To run the application, go to the main folder and run `docker-compose up`

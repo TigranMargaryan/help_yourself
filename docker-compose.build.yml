@@ -1,0 +1,7 @@
+version: '2.1'
+
+services:
+
+  ttq-web:
+    build: ./help-yourself.web
+    image: registry.github.com/help_yourself/help-yourself-web

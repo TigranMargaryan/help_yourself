@@ -86,6 +86,13 @@
 		</dependency>
 	</dependencies>
 
+	<repositories>
+		<repository>
+			<id>help.read</id>
+			<url>${help.read.url}</url>
+		</repository>
+	</repositories>
+
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -96,5 +103,16 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>help.write</id>
+			<url>${help.write.url}</url>
+		</repository>
+		<snapshotRepository>
+			<id>help.write</id>
+			<url>${help.write.url}</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 </project>

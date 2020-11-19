@@ -6,6 +6,7 @@ public class TestConstants {
     public static final String TYPE = "type";
     public static final String USER = "user";
     public static final String EMAIL = "email";
+    public static final String BEARER = "Bearer";
     public static final String USERNAME = "userName";
     public static final String PASSWORD = "password";
     public static final String LAST_NAME = "lastName";
@@ -13,7 +14,7 @@ public class TestConstants {
     public static final String FIRST_NAME = "firstName";
     public static final String ACCESS_TOKEN = "access_token";
     public static final String CONTENT_TYPE = "Content-Type";
-
+    public static final String AUTHORIZATION = "Authorization";
     public static final String CLIENT_ID = "devglan-client";
     public static final String CLIENT_SECRET = "devglan-secret";
     public static final String LOGIN_URL = "/login";

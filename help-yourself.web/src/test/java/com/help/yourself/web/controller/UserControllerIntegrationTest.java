@@ -2,46 +2,37 @@ package com.help.yourself.web.controller;
 
 import com.help.yourself.web.ApplicationTests;
 import com.help.yourself.web.config.Response;
-import com.help.yourself.web.helper.TestConstants;
-import com.help.yourself.web.helper.TestHelper;
-import com.help.yourself.web.helper.TestUtils;
-import org.junit.Before;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Map;
 import static com.help.yourself.web.helper.TestConstants.*;
+import static com.help.yourself.web.helper.TestUtils.*;
 
 public class UserControllerIntegrationTest extends ApplicationTests {
-
-   private Map<String, Object> volunteer;
-   private String userId;
-   private String accessToken;
 
     @Autowired
     protected TestRestTemplate restTemplate;
 
-    @Before
-    public void setUp(){
-       HttpEntity<?> request = new HttpEntity<Object>(TestHelper.addVolunteerRequest(getRequest()), null);
-       TestHelper.addVolunteerRequest(getRequest());
-
-        Response<Map<String, Map<String, Object>>> response = restTemplate.postForObject("/users", request, Response.class);
-
-        Map<String, Object> createdUser = response.getData().get(USER);
-
-        userId = (String) createdUser.get(ID);
-
-        TestRestTemplate restTemplateWithBasicAuth = restTemplate.withBasicAuth(TestUtils.getClientId(), TestUtils.getClientSecret());
-        Map<String, String> responseLogin = restTemplateWithBasicAuth.postForObject(TestConstants.LOGIN_URL, TestUtils.getLoginRequest(), Map.class);
-
-        accessToken = responseLogin.get(ACCESS_TOKEN);
-    }
 
     @Test
     public void getUser(){
 
+        HttpEntity<Map<String, Object>> request = getRequest();
+
+        ResponseEntity<Response> response = restTemplate.exchange("/help-yourself/users", HttpMethod.GET, getRequest(), Response.class);
+
+        Map<String, Object> user = getResponseDataAsMap(response).get(USER);
+
+        Assert.assertNotNull(user.get(ID));
+        Assert.assertNotNull(user.get(FIRST_NAME));
+        Assert.assertNotNull(user.get(LAST_NAME));
+        Assert.assertNotNull(user.get(USERNAME));
+        Assert.assertNotNull(user.get(EMAIL));
     }
 }
